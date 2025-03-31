@@ -45,6 +45,20 @@ def fetch_memes():
                     print(f"Found a video meme: {clip.video_url}")
                 else:
                     print("Clip found but no video_url attribute")
+            if hasattr(clip, 'image_versions2') and 'candidates' in clip.image_versions2:
+                    candidates = clip.image_versions2['candidates']
+                    # Extract the URL of the first candidate (usually the highest quality)
+                    if candidates:
+                        thumbnail_url = candidates[0].get('url')
+                        if thumbnail_url:
+                            print(f"Found a thumbnail meme: {thumbnail_url}")
+                        else:
+                            print("Thumbnail URL not found in candidates.")
+                    else:
+                        print("No candidates found in image_versions2.")
+            else:
+                print("Clip does not have 'image_versions2' or 'candidates'.")
+
 
 # Login and then fetch memes
 login()
